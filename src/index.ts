@@ -22,6 +22,7 @@ type Cardmark = {
 	slug: string;
 	name: string;
 	aliases: readonly string[];
+	color: `#${string}`;
 	coverage: 'global' | 'regional';
 	region: string;
 	source: 'Payrexx payment-logos' | 'SVG Credit Card & Payment Icons';
@@ -38,6 +39,7 @@ const cardmarks = ([
 		slug: 'american-express',
 		name: 'American Express',
 		aliases: ['amex', 'american express', 'americanexpress'],
+		color: '#0071CE',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -47,6 +49,7 @@ const cardmarks = ([
 		slug: 'bancontact',
 		name: 'Bancontact',
 		aliases: ['bcmc', 'bancontact mister cash', 'mister cash'],
+		color: '#0A3782',
 		coverage: 'regional',
 		region: 'Belgium',
 		source: 'Payrexx payment-logos',
@@ -56,6 +59,7 @@ const cardmarks = ([
 		slug: 'cartes-bancaires',
 		name: 'Cartes Bancaires',
 		aliases: ['cb', 'carte bancaire', 'cartes bancaires', 'carte bleue'],
+		color: '#003C65',
 		coverage: 'regional',
 		region: 'France',
 		source: 'Payrexx payment-logos',
@@ -65,6 +69,7 @@ const cardmarks = ([
 		slug: 'dankort',
 		name: 'Dankort',
 		aliases: ['dk'],
+		color: '#000000',
 		coverage: 'regional',
 		region: 'Denmark',
 		source: 'Payrexx payment-logos',
@@ -74,6 +79,7 @@ const cardmarks = ([
 		slug: 'diners-club',
 		name: 'Diners Club',
 		aliases: ['diners', 'diners club', 'dinersclub'],
+		color: '#004C97',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -83,6 +89,7 @@ const cardmarks = ([
 		slug: 'discover',
 		name: 'Discover',
 		aliases: ['discover card', 'discover network'],
+		color: '#F59900',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -92,6 +99,7 @@ const cardmarks = ([
 		slug: 'elo',
 		name: 'Elo',
 		aliases: ['elo card'],
+		color: '#000000',
 		coverage: 'regional',
 		region: 'Brazil',
 		source: 'SVG Credit Card & Payment Icons',
@@ -101,6 +109,7 @@ const cardmarks = ([
 		slug: 'hiper',
 		name: 'Hiper',
 		aliases: ['hiper brazil'],
+		color: '#F37421',
 		coverage: 'regional',
 		region: 'Brazil',
 		source: 'SVG Credit Card & Payment Icons',
@@ -110,6 +119,7 @@ const cardmarks = ([
 		slug: 'hipercard',
 		name: 'Hipercard',
 		aliases: ['hiper card brazil'],
+		color: '#B3131B',
 		coverage: 'regional',
 		region: 'Brazil',
 		source: 'SVG Credit Card & Payment Icons',
@@ -119,6 +129,7 @@ const cardmarks = ([
 		slug: 'jcb',
 		name: 'JCB',
 		aliases: ['japan credit bureau'],
+		color: '#006DBA',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -128,6 +139,7 @@ const cardmarks = ([
 		slug: 'maestro',
 		name: 'Maestro',
 		aliases: ['mastercard maestro'],
+		color: '#4487CA',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -137,6 +149,7 @@ const cardmarks = ([
 		slug: 'mastercard',
 		name: 'Mastercard',
 		aliases: ['master card', 'mc'],
+		color: '#EB001B',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -146,6 +159,7 @@ const cardmarks = ([
 		slug: 'mir',
 		name: 'Mir',
 		aliases: ['mir card', 'mir payment system'],
+		color: '#37A72E',
 		coverage: 'regional',
 		region: 'Russia',
 		source: 'SVG Credit Card & Payment Icons',
@@ -155,6 +169,7 @@ const cardmarks = ([
 		slug: 'rupay',
 		name: 'RuPay',
 		aliases: ['ru pay', 'national payments corporation of india', 'npci rupay'],
+		color: '#2A2C83',
 		coverage: 'regional',
 		region: 'India',
 		source: 'Payrexx payment-logos',
@@ -164,6 +179,7 @@ const cardmarks = ([
 		slug: 'uatp',
 		name: 'UATP',
 		aliases: ['universal air travel plan', 'air travel card'],
+		color: '#43B748',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -173,6 +189,7 @@ const cardmarks = ([
 		slug: 'unionpay',
 		name: 'UnionPay',
 		aliases: ['union pay', 'china unionpay', 'cup'],
+		color: '#D10429',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -182,6 +199,7 @@ const cardmarks = ([
 		slug: 'visa',
 		name: 'Visa',
 		aliases: ['visa card'],
+		color: '#1434CB',
 		coverage: 'global',
 		region: 'Worldwide',
 		source: 'Payrexx payment-logos',
@@ -191,6 +209,7 @@ const cardmarks = ([
 		slug: 'visa-electron',
 		name: 'Visa Electron',
 		aliases: ['electron', 'visa electron'],
+		color: '#095EA2',
 		coverage: 'regional',
 		region: 'International',
 		source: 'Payrexx payment-logos',
@@ -200,6 +219,7 @@ const cardmarks = ([
 		slug: 'v-pay',
 		name: 'V Pay',
 		aliases: ['vpay', 'visa v pay'],
+		color: '#030C18',
 		coverage: 'regional',
 		region: 'Europe',
 		source: 'Payrexx payment-logos',
@@ -222,6 +242,13 @@ const jsonHeaders = {
 	'Access-Control-Allow-Origin': '*',
 	'Cache-Control': 'no-store',
 	'Content-Type': 'application/json; charset=utf-8',
+	'X-Content-Type-Options': 'nosniff',
+} as const;
+
+const colorHeaders = {
+	'Access-Control-Allow-Origin': '*',
+	'Cache-Control': 'public, max-age=31536000, immutable',
+	'Content-Type': 'text/plain; charset=utf-8',
 	'X-Content-Type-Options': 'nosniff',
 } as const;
 
@@ -251,12 +278,14 @@ export default {
 			return jsonResponse(createDocs(url.origin, cardmarks), 200, undefined, request.method === 'HEAD');
 		}
 
-		const cardmark = resolveCardmark(lookup);
+		const colorLookup = readColorLookup(lookup);
+		const cardmarkLookup = colorLookup ?? lookup;
+		const cardmark = resolveCardmark(cardmarkLookup);
 
 		if (!cardmark) {
 			return jsonResponse(
 				{
-					error: `Card brand not found: ${lookup}`,
+					error: `Card brand not found: ${cardmarkLookup}`,
 					supported_count: cardmarks.length,
 					docs: url.origin,
 				},
@@ -264,6 +293,12 @@ export default {
 				undefined,
 				request.method === 'HEAD',
 			);
+		}
+
+		if (colorLookup !== null) {
+			return new Response(request.method === 'HEAD' ? null : cardmark.color, {
+				headers: colorHeaders,
+			});
 		}
 
 		const size = readSize(url.searchParams.get('size'));
@@ -287,13 +322,23 @@ function readLookup(pathname: string): string | null {
 	const parts = pathname.split('/').filter(Boolean);
 
 	if (parts.length === 0) return null;
-	if (parts.length !== 1) return parts.join('/');
 
-	try {
-		return decodeURIComponent(parts[0]).trim();
-	} catch {
-		return parts[0].trim();
-	}
+	return parts
+		.map((part) => {
+			try {
+				return decodeURIComponent(part);
+			} catch {
+				return part;
+			}
+		})
+		.join('/')
+		.trim();
+}
+
+function readColorLookup(lookup: string): string | null {
+	const match = lookup.match(/^(.+)\/color$/i);
+
+	return match?.[1]?.trim() || null;
 }
 
 function isDocsLookup(lookup: string): boolean {
@@ -379,8 +424,12 @@ function createDocs(origin: string, items: readonly Cardmark[]) {
 		name: 'Aspekt Cardmarks API',
 		description: 'Return international and regional payment-card brand marks as SVG images.',
 		endpoint: `${origin}/:brand`,
+		color_endpoint: `${origin}/:brand/color`,
 		docs: [`${origin}/`, `${origin}/docs.json`],
 		response_type: 'image/svg+xml; charset=utf-8',
+		color_response_type: 'text/plain; charset=utf-8',
+		color_description:
+			'A representative primary brand color selected from the bundled logo artwork, returned as an uppercase six-digit hex value.',
 		lookup: ['canonical slug', 'brand name', 'common alias'],
 		normalization: 'Lookup is case-insensitive and ignores spaces, punctuation, hyphens, underscores, and diacritics. A trailing .svg is optional.',
 		query_parameters: {
@@ -392,9 +441,17 @@ function createDocs(origin: string, items: readonly Cardmark[]) {
 			},
 		},
 		count: items.length,
-		cardmarks: items.map(({ slug, name, coverage, region, source }) => ({ slug, name, coverage, region, source })),
+		cardmarks: items.map(({ slug, name, color, coverage, region, source }) => ({
+			slug,
+			name,
+			color,
+			coverage,
+			region,
+			source,
+		})),
 		examples: [
 			`${origin}/visa`,
+			`${origin}/visa/color`,
 			`${origin}/master-card.svg?size=480`,
 			`${origin}/amex`,
 			`${origin}/union-pay`,

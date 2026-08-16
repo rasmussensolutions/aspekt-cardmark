@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 type CardmarkSummary = {
 	slug: string;
 	name: string;
+	color: `#${string}`;
 	coverage: 'global' | 'regional';
 	region: string;
 	source: 'Payrexx payment-logos' | 'SVG Credit Card & Payment Icons';
@@ -12,6 +13,8 @@ type CardmarkSummary = {
 type Docs = {
 	name: string;
 	count: number;
+	color_endpoint: string;
+	color_response_type: string;
 	cardmarks: CardmarkSummary[];
 };
 
@@ -29,9 +32,12 @@ describe('Aspekt Cardmarks API', () => {
 		expect(response.headers.get('Cache-Control')).toBe('no-store');
 		expect(docs.name).toBe('Aspekt Cardmarks API');
 		expect(docs.count).toBe(19);
+		expect(docs.color_endpoint).toBe('https://cardmarks.aspekt.systems/:brand/color');
+		expect(docs.color_response_type).toBe('text/plain; charset=utf-8');
 		expect(docs.cardmarks).toContainEqual({
 			slug: 'visa',
 			name: 'Visa',
+			color: '#1434CB',
 			coverage: 'global',
 			region: 'Worldwide',
 			source: 'Payrexx payment-logos',
@@ -39,10 +45,49 @@ describe('Aspekt Cardmarks API', () => {
 		expect(docs.cardmarks).toContainEqual({
 			slug: 'rupay',
 			name: 'RuPay',
+			color: '#2A2C83',
 			coverage: 'regional',
 			region: 'India',
 			source: 'Payrexx payment-logos',
 		});
+	});
+
+	it('returns the documented primary color for every card brand', async () => {
+		const docsResponse = await SELF.fetch('https://cardmarks.aspekt.systems/');
+		const docs = await docsResponse.json<Docs>();
+
+		const responses = await Promise.all(
+			docs.cardmarks.map(async (cardmark) => ({
+				cardmark,
+				response: await SELF.fetch(
+					`https://cardmarks.aspekt.systems/${cardmark.slug}/color`,
+				),
+			})),
+		);
+
+		for (const { cardmark, response } of responses) {
+			expect(response.status, cardmark.slug).toBe(200);
+			expect(response.headers.get('Content-Type'), cardmark.slug).toBe('text/plain; charset=utf-8');
+			expect(response.headers.get('Cache-Control'), cardmark.slug).toBe(
+				'public, max-age=31536000, immutable',
+			);
+			expect(response.headers.get('Access-Control-Allow-Origin'), cardmark.slug).toBe('*');
+			expect(await response.text(), cardmark.slug).toBe(cardmark.color);
+			expect(cardmark.color, cardmark.slug).toMatch(/^#[0-9A-F]{6}$/);
+		}
+	});
+
+	it.each([
+		['visa', '#1434CB'],
+		['master-card', '#EB001B'],
+		['amex', '#0071CE'],
+		['American%20Express', '#0071CE'],
+		['union-pay', '#D10429'],
+	])('resolves the %s alias for color lookup', async (alias, color) => {
+		const response = await SELF.fetch(`https://cardmarks.aspekt.systems/${alias}/color`);
+
+		expect(response.status).toBe(200);
+		expect(await response.text()).toBe(color);
 	});
 
 	it('also serves discovery JSON from /docs.json', async () => {
@@ -129,11 +174,15 @@ describe('Aspekt Cardmarks API', () => {
 
 	it('supports HEAD requests without returning a response body', async () => {
 		const imageResponse = await SELF.fetch('https://cardmarks.aspekt.systems/visa', { method: 'HEAD' });
+		const colorResponse = await SELF.fetch('https://cardmarks.aspekt.systems/visa/color', { method: 'HEAD' });
 		const docsResponse = await SELF.fetch('https://cardmarks.aspekt.systems/', { method: 'HEAD' });
 
 		expect(imageResponse.status).toBe(200);
 		expect(imageResponse.headers.get('Content-Type')).toBe('image/svg+xml; charset=utf-8');
 		expect(await imageResponse.text()).toBe('');
+		expect(colorResponse.status).toBe(200);
+		expect(colorResponse.headers.get('Content-Type')).toBe('text/plain; charset=utf-8');
+		expect(await colorResponse.text()).toBe('');
 		expect(docsResponse.status).toBe(200);
 		expect(docsResponse.headers.get('Content-Type')).toBe('application/json; charset=utf-8');
 		expect(await docsResponse.text()).toBe('');
